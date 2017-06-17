@@ -4,7 +4,8 @@
   "description": "This extension allows users to highlight and comment on articles",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "icon128.png"
+    "default_icon": "icon128.png",
+    "default_popup": "highlighter.html"
   },
   "icons": {
     "16": "icon16.png",
