@@ -15,7 +15,13 @@ window.onload = function () {
         }
         return null;
     });
+    showComments();
 };
+
+function showComments() {
+    var sidebar = document.createElement('div');
+    sidebar.attributes
+}
 
 function appendId(node) {
     var queue = [document.body];
