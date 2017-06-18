@@ -7,16 +7,18 @@ chrome.extension.onRequest.addListener(handleRequest);
 var sidebarElement = document.createElement('div');
 var sidebarOpen = false;
 
-sidebarElement.id="WeighInSidebar";
-var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-xhr.open('get', 'sidebar.html', true);
-xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) { 
-        document.getElementById("WeighInSidebar").innerHTML = xhr.responseText;
-    } 
-}
-xhr.send();
+sidebarElement.id="WeighInSidebar2";
+sidebarElement.innerHTML = "<h2>TEsting</h2>";
+// var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+// xhr.open('get', 'sidebar.html', true);
+// xhr.onreadystatechange = function() {
+//     if (xhr.readyState == 4 && xhr.status == 200) { 
+//         document.getElementById("WeighInSidebar").innerHTML = xhr.responseText;
+//     } 
+// }
+// xhr.send();
 sidebarElement.style.display = "none";
+document.body.appendChild(sidebarElement);
 
 // window.onload = function () {
 //     console.log('URL: ', window.location.href);
@@ -52,24 +54,27 @@ sidebarElement.style.display = "none";
 
 function toggleSidebar() {
     if(sidebarOpen) {
+        console.log(sidebarElement);
         sidebarElement.style.display="none";
-        document.body.className = document.body.className.replace("weighinpadding","");
+        document.body.style="padding-left:0px"
         sidebarOpen = false;
     } else {
         sidebarElement.style.display="";
-        document.body.classList += "wieghinpadding";
+        document.body.style= "padding-left:200px";
         sidebarOpen = true;
     }
+
+    return sidebarOpen;
 }
 
-function showComments() {
-    var sidebar = document.createElement('div');
-    sidebar.attributes
-}
+// function showComments() {
+//     var sidebar = document.createElement('div');
+//     sidebar.attributes
+// }
 
-function appendId(node) {
-    var queue = [document.body];
-    while(queue) {
+// function appendId(node) {
+//     var queue = [document.body];
+//     while(queue) {
 
-    }
-}
+//     }
+// }
