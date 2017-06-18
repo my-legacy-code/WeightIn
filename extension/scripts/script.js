@@ -19,8 +19,8 @@
 // };
 //
 // function showComments() {
-//     var sidebar = document.createElement('div');
-//     sidebar.attributes
+//     var sidebar.component.js = document.createElement('div');
+//     sidebar.component.js.attributes
 // }
 //
 // function appendId(node) {

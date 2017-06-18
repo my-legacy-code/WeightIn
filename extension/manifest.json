@@ -16,8 +16,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["styles/style.css"],
-      "js": ["scripts/app/app.js"]
+      "css": ["styles/style.css", "styles/app/app.component.css", "styles/app/sidebar.component.css"],
+      "js": ["scripts/app/sidebar.component.js","scripts/app/app.component.js"]
     }
   ],
   "permissions": ["storage"]
