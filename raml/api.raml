@@ -1,0 +1,119 @@
+#%RAML 1.0
+title: WeighIn
+version: v1.0
+baseUri: https://weighin.wehackers.club
+securitySchemes:
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
+securedBy: [oauth_2_0]
+
+/messages:
+  get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+								{
+									"messages": [{
+											"timestamp": "123123123",
+											"user": "bob",
+											"text": "this is a comment", 
+											"highlight_id": "1234bnmn",
+											"start" : 12,
+											"end" : 24
+
+										},
+										{
+											"timestamp": "123123123",
+											"user": "bob",
+											"text": "this is a comment"
+										}
+									]
+								}
+	post:
+		description: "Add a message"
+		body:
+			application/json:
+				type: Message
+				example: | 
+								{
+									"message": {
+											"user": "bob",
+											"text": "this is a message", 
+											"highlight_element_id": "1234bnmn"
+										}
+								}
+		responses: 
+			201:
+/comments:
+  get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+               {
+								"comments": [{
+										"timestamp": "123123123",
+										"user": "bob",
+										"text": "this is a comment"
+									},
+									{
+										"timestamp": "123123123",
+										"user": "bob",
+										"text": "this is a comment"
+									}
+								]
+							}
+	post:
+			description: "Add a comment"
+			body:
+				application/json:
+					type: Comment
+					example: |
+						{
+							"comment" : {
+								"user" : "bob",
+								"text" : "this is a comment",
+								"url" : "url.com"
+							}
+						}	
+			responses:
+				201:
+/highlights:
+  get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "highlights" : [{
+										"db_id" : 1,
+										"element_id" : 32,
+										"start" : 20,
+										"end" : 32
+									},
+									{
+										"db_id" : 1,
+										"element_id" : 32,
+										"start" : 20,
+										"end" : 32
+									}
+								]
+              }
+	post:
+			description: "Add a highlight"
+			body:
+				application/json:
+					type: Comment
+					example: |
+						{
+							"highlight" : {
+								"element_id" :1,
+								"start" :3,
+								"end" :12
+							}
+						}	
+			responses:
+				201:

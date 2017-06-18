@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'run', 'mock' ]
+2 info using npm@4.0.5
+3 info using node@v7.4.0
+4 verbose run-script [ 'premock', 'mock', 'postmock' ]
+5 info lifecycle raml@1.0.0~premock: raml@1.0.0
+6 silly lifecycle raml@1.0.0~premock: no script for premock, continuing
+7 info lifecycle raml@1.0.0~mock: raml@1.0.0
+8 verbose lifecycle raml@1.0.0~mock: unsafe-perm in lifecycle true
+9 verbose lifecycle raml@1.0.0~mock: PATH: /usr/lib/node_modules/npm/bin/node-gyp-bin:/home/ftlc/work/Hackathon/ISS/node_modules/.bin:/home/ftlc/.gem/ruby/2.4.0/bin:/home/ftlc/.cargo/bin:/home/ftlc/scripts:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/staruml/:/home/ftlc/.vimpkg/bin
+10 verbose lifecycle raml@1.0.0~mock: CWD: /home/ftlc/work/Hackathon/ISS
+11 silly lifecycle raml@1.0.0~mock: Args: [ '-c', 'node mock.js' ]
+12 silly lifecycle raml@1.0.0~mock: Returned: code: 1  signal: null
+13 info lifecycle raml@1.0.0~mock: Failed to exec mock script
+14 verbose stack Error: raml@1.0.0 mock: `node mock.js`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:279:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:885:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid raml@1.0.0
+16 verbose cwd /home/ftlc/work/Hackathon/ISS
+17 error Linux 4.8.13-1-ARCH
+18 error argv "/usr/bin/node" "/usr/bin/npm" "run" "mock"
+19 error node v7.4.0
+20 error npm  v4.0.5
+21 error code ELIFECYCLE
+22 error raml@1.0.0 mock: `node mock.js`
+22 error Exit status 1
+23 error Failed at the raml@1.0.0 mock script 'node mock.js'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the raml package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     node mock.js
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs raml
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls raml
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
