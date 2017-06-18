@@ -3,17 +3,9 @@
   "name": "WeighIn",
   "description": "This extension allows users to highlight and comment on articles",
   "version": "1.0",
-<<<<<<< HEAD
-  "background": {
-    "page":"highlighter.html"
-  },
-  "page_action": {
-    "default_title":"WeighIn"
-=======
   "browser_action": {
     "default_icon": "images/icon128-grey.png",
     "default_popup": "popup.html"
->>>>>>> origin/sidebar-yliu
   },
   "icons": {
     "16": "images/icon16.png",
@@ -23,20 +15,10 @@
   },
   "content_scripts": [
     {
-<<<<<<< HEAD
-      "matches": ["<all_urls>"],
-      "css": ["style.css"],
-      "js": ["script.js"]
-    }
-  ],
-  "permissions": [ "tabs" ]
-}
-=======
       "matches": ["http://*/*", "https://*/*"],
       "css": ["styles/style.css", "styles/app/app.component.css", "styles/app/sidebar.component.css"],
-      "js": ["scripts/app/sidebar.component.js","scripts/app/app.component.js"]
+      "js": ["scripts/app/moment.js","scripts/app/sidebar.component.js","scripts/app/highlighter.js","scripts/app/app.component.js"]
     }
   ],
   "permissions": ["storage"]
 }
->>>>>>> origin/sidebar-yliu
