@@ -1,5 +1,6 @@
 window.onload = function () {
     var toggleSwitch = document.querySelector('#switch-toggle');
+
     isPlugInEnabled(function (enabled) {
             toggleSwitch.checked = enabled;
         enablePlugIn(enabled);

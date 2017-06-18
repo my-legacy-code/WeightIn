@@ -41,10 +41,10 @@ function SideBarComponent() {
         '</ul>' +
         '<div class="weigh-in-new-comment-box">' +
             '<div>' +
-                '<textarea class="weigh-in-comment-input" placeholder="Please type your message here."></textarea>' +
+                '<textarea id="weigh-in-comment-input" class="weigh-in-comment-input" placeholder="Please type your message here."></textarea>' +
             '</div>'+
             '<div>' +
-                '<div class="weigh-in-send-button">Send</div>' +
+                '<div id="weigh-in-send-button" class="weigh-in-send-button">Send</div>' +
             '</div>' +
         '</div>';
     this.width = 350;
@@ -68,6 +68,32 @@ function SideBarComponent() {
         document.body.appendChild(this.page);
         self.hide();
     };
+
+    this.appendMessage = function(username, datetime) {
+        var comment = document.getElementById("weigh-in-comment-input").value;
+        var listEle = document.getElementById("weigh-in-sidebar-comment-list");
+        var newComment = document.createElement('li');
+        newComment.innerHTML = '<div><span class="weigh-in-username">'+username+'</span>: '+comment+'</div>' +
+            '<div class="weigh-in-datetime">'+moment(datetime).fromNow()+'</div>';
+        listEle.appendChild(newComment);
+    };
+
+    var sendButton = this.el.querySelector('#weigh-in-send-button');
+    // onClick's logic below:
+    sendButton.addEventListener('click', function() {
+        var username = 'Ben';
+        var datetime = new Date();
+        // get comment data and pass to append message
+        self.appendMessage(username, datetime);
+    });
+
+    this.timerFunction = function() {
+        var commentsDates = self.el.querySelectorAll('.weigh-in-datetime');
+        for(i=0; i < commentsDates.length; i++)
+            commentsDates.value='testest';
+    }
+
+    var commentTimer = setInterval(this.timerFunction, 5000);
 
     this.wrapPageContent();
 }

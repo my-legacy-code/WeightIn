@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "WeighIn",
-  "description": "Highlight and comments on paragraphs",
+  "description": "This extension allows users to highlight and comment on articles",
   "version": "1.0",
   "browser_action": {
     "default_icon": "images/icon128-grey.png",
@@ -20,7 +20,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["styles/style.css", "styles/app/app.component.css", "styles/app/sidebar.component.css", "styles/app/message-box.component.css"],
-      "js": ["scripts/app/components/sidebar.component.js","scripts/app/components/message-box.component.js", "scripts/app/components/app.component.js"]
+      "js": ["scripts/app/moment.js", "scripts/app/components/sidebar.component.js","scripts/app/components/message-box.component.js", "scripts/app/components/app.component.js"]
     }
   ],
   "permissions": [
