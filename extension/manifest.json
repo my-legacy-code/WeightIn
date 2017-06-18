@@ -13,12 +13,18 @@
     "128": "images/icon128.png",
     "256": "images/icon256.png"
   },
+  "background": {
+    "scripts": ["scripts/app/services/context-menu.service.js", "scripts/background.js"]
+  },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["styles/style.css", "styles/app/app.component.css", "styles/app/sidebar.component.css"],
-      "js": ["scripts/app/sidebar.component.js","scripts/app/app.component.js"]
+      "js": ["scripts/app/components/sidebar.component.js", "scripts/app/components/app.component.js"]
     }
   ],
-  "permissions": ["storage"]
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ]
 }

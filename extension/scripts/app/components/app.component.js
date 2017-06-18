@@ -22,11 +22,5 @@
     document.body.appendChild(this.sidebar.el);
 
     this.comments = [{}];
-
     this.handleStateChange();
-    chrome.storage.sync.get('weighIn-enabled', function(values){
-        if(values['weighIn-enabled'])
-            self.sidebar.show();
-        else self.sidebar.hide();
-    });
 })();

@@ -10,12 +10,11 @@ window.onload = function () {
             enablePlugIn(true);
         else
             enablePlugIn(false);
-    })
+    });
+
 };
 
 function enablePlugIn(enabled) {
-    if(enabled) chrome.browserAction.setIcon({path: 'images/icon128.png'});
-    else chrome.browserAction.setIcon({path: 'images/icon128-grey.png'});
     chrome.storage.sync.set({'weighIn-enabled': enabled});
 }
 
