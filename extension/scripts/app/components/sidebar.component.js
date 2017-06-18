@@ -1,5 +1,5 @@
 function SideBarComponent() {
-    this.el = document.createElement('weight-in-sidebar-component');
+    this.el = document.createElement('weight-in-sidebar');
     this.el.innerHTML =
         '<div class="weigh-in-sidebar-header">' +
             '<img class="icon" src="https://s3.us-east-2.amazonaws.com/weigh-in/icon256.png"/>' +

@@ -7,7 +7,7 @@ weight-in-page {
     transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-weight-in-sidebar-component {
+weight-in-sidebar {
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@ weight-in-sidebar-component {
     transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-weight-in-sidebar-component > .weigh-in-sidebar-header {
+weight-in-sidebar > .weigh-in-sidebar-header {
     font-family: 'Helvetica', sans-serif;
     position: relative;
     line-height: 1;

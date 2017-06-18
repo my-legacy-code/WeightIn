@@ -1,0 +1,8 @@
+weight-in-message-box {
+    padding: 10px;
+    background-color: white;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    z-index: 1000;
+}

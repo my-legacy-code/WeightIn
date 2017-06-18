@@ -21,6 +21,8 @@
     this.sidebar = new SideBarComponent();
     document.body.appendChild(this.sidebar.el);
 
+    this.messageBox = new MessageBoxComponent();
+
     this.comments = [{}];
     this.handleStateChange();
 })();
