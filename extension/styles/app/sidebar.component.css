@@ -2,6 +2,8 @@ weight-in-page {
     position: fixed;
     left: 0;
     top: 0;
+    bottom: 0;
+    overflow: auto;
     transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -15,4 +17,29 @@ weight-in-sidebar-component {
     z-index: 1000;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+weight-in-sidebar-component > .weigh-in-sidebar-header {
+    font-family: 'Helvetica', sans-serif;
+    position: relative;
+    line-height: 1;
+    color: #6B6B6B;
+    text-align: left;
+    padding: 5px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    box-sizing: content-box;
+    height: 32px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.weigh-in-sidebar-header > .icon {
+    width: 32px;
+    height: 32px;
+}
+
+.weigh-in-sidebar-header > .title {
+    position: absolute;
+    top: 12px;
+    left: 72px;
 }
