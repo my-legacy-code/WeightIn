@@ -3,9 +3,11 @@
   "name": "WeighIn",
   "description": "This extension allows users to highlight and comment on articles",
   "version": "1.0",
-  "browser_action": {
-    "default_icon": "icon128.png",
-    "default_popup": "highlighter.html"
+  "background": {
+    "page":"highlighter.html"
+  },
+  "page_action": {
+    "default_title":"WeighIn"
   },
   "icons": {
     "16": "icon16.png",
@@ -15,9 +17,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["<all_urls>"],
       "css": ["style.css"],
       "js": ["script.js"]
     }
-  ]
+  ],
+  "permissions": [ "tabs" ]
 }
