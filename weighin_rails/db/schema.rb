@@ -10,22 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618140544) do
+ActiveRecord::Schema.define(version: 20170618145757) do
+
+  create_table "comments", force: :cascade do |t|
+    t.string "user"
+    t.text "body"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_comments_on_url"
+  end
 
   create_table "highlights", force: :cascade do |t|
+    t.string "user"
+    t.string "url"
     t.integer "start"
     t.integer "end"
     t.string "element_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_highlights_on_url"
   end
 
   create_table "messages", force: :cascade do |t|
+    t.string "highlight_id"
     t.text "content"
     t.string "user"
-    t.string "highlight_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["highlight_id"], name: "index_messages_on_highlight_id"
   end
 
 end

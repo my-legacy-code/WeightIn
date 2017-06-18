@@ -3,4 +3,10 @@ Rails.application.routes.draw do
 
   get '/messages' => 'message#show'
   post '/messages' => 'message#update'
+
+  get '/highlights' => 'highlight#show'
+  post '/highlights' => 'highlight#update'
+
+  get '/comments' => 'comment#show'
+  post '/comments' => 'comment#update'
 end
