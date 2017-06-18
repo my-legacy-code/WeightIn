@@ -50,9 +50,10 @@ weight-in-sidebar-component > .weigh-in-sidebar-header {
 }
 
 #weigh-in-sidebar-comment-list {
-    padding: 20px;
-    margin: 0;
+    margin: 20px;
+    padding: 0;
     list-style: none;
+    overflow-x: hidden;
     overflow-y: auto;
     flex: 1;
 }
