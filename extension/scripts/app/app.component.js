@@ -1,5 +1,5 @@
 (function AppComponent() {
-    self = this;
+    var self = this;
 
     this.enablePlugIn = function (enabled) {
         if (enabled) self.sidebar.show();
@@ -24,4 +24,9 @@
     this.comments = [{}];
 
     this.handleStateChange();
+    chrome.storage.sync.get('weighIn-enabled', function(values){
+        if(values['weighIn-enabled'])
+            self.sidebar.show();
+        else self.sidebar.hide();
+    });
 })();
