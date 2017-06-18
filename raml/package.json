@@ -1,0 +1,30 @@
+{
+  "name": "raml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mock.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "mock": "node mock.js",
+    "doc": "node doc.js",
+    "build": "rm -rf documentation/* && raml2html api.raml > documentation/index.html",
+    "gh-pages": "mv documentation/index.html index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoverCoding/raml.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoverCoding/raml/issues"
+  },
+  "homepage": "https://github.com/CoverCoding/raml#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "raml-1-mocker": "^0.1.2",
+    "raml2html": "^6.3.0"
+  }
+}
