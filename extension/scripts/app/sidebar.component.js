@@ -18,7 +18,35 @@ function SideBarComponent() {
                 '<div><span class="weigh-in-username">US</span>: This is cool!</div>' +
                 '<div class="weigh-in-datetime">June 5th</div>' +
             '</li>' +
-        '</ul>';
+            '<li>' +
+            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
+            '<div class="weigh-in-datetime">1 second ago</div>' +
+            '</li>' +
+            '<li>' +
+            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
+            '<div class="weigh-in-datetime">1 second ago</div>' +
+            '</li>' +
+            '<li>' +
+            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
+            '<div class="weigh-in-datetime">1 second ago</div>' +
+            '</li>' +
+            '<li>' +
+            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
+            '<div class="weigh-in-datetime">1 second ago</div>' +
+            '</li>' +
+            '<li>' +
+            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
+            '<div class="weigh-in-datetime">1 second ago</div>' +
+            '</li>' +
+        '</ul>' +
+        '<div class="weigh-in-new-comment-box">' +
+            '<div>' +
+                '<textarea class="weigh-in-comment-input" placeholder="Please type your message here."></textarea>' +
+            '</div>'+
+            '<div>' +
+                '<div class="weigh-in-send-button">Send</div>' +
+            '</div>' +
+        '</div>';
     this.width = 350;
     var self = this;
     this.show = function () {
