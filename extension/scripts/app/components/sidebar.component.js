@@ -1,4 +1,4 @@
-function SideBarComponent() {
+function SideBarComponent(dependencies) {
     this.el = document.createElement('weight-in-sidebar');
     this.el.innerHTML =
         '<div class="weigh-in-sidebar-header">' +
@@ -6,38 +6,6 @@ function SideBarComponent() {
                 '<div class="title"><span>2</span> Comments</div>' +
         '</div>' +
         '<ul id="weigh-in-sidebar-comment-list">' +
-            '<li>' +
-                '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
-                '<div class="weigh-in-datetime">1 second ago</div>' +
-            '</li>' +
-            '<li>' +
-                '<div><span class="weigh-in-username">Feminist123</span>: This article only skims the surface of issues sur-rounding sexism in the United States.</div>' +
-                '<div class="weigh-in-datetime">10 minutes ago</div>' +
-            '</li>' +
-            '<li>' +
-                '<div><span class="weigh-in-username">US</span>: This is cool!</div>' +
-                '<div class="weigh-in-datetime">June 5th</div>' +
-            '</li>' +
-            '<li>' +
-            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
-            '<div class="weigh-in-datetime">1 second ago</div>' +
-            '</li>' +
-            '<li>' +
-            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
-            '<div class="weigh-in-datetime">1 second ago</div>' +
-            '</li>' +
-            '<li>' +
-            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
-            '<div class="weigh-in-datetime">1 second ago</div>' +
-            '</li>' +
-            '<li>' +
-            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
-            '<div class="weigh-in-datetime">1 second ago</div>' +
-            '</li>' +
-            '<li>' +
-            '<div><span class="weigh-in-username">3NYTimes</span>: Great article, checkout this other article by Maurine Dowd: https://www.nytimes.com/2017/05/27/opinion/sunday/trumps-hand-to-hand-combat.html</div>' +
-            '<div class="weigh-in-datetime">1 second ago</div>' +
-            '</li>' +
         '</ul>' +
         '<div class="weigh-in-new-comment-box">' +
             '<div>' +
@@ -47,6 +15,7 @@ function SideBarComponent() {
                 '<div id="weigh-in-send-button" class="weigh-in-send-button">Send</div>' +
             '</div>' +
         '</div>';
+    this.textfield = this.el.querySelector("#weigh-in-comment-input");
     this.width = 350;
     var self = this;
     this.show = function () {
@@ -69,31 +38,55 @@ function SideBarComponent() {
         self.hide();
     };
 
-    this.appendMessage = function(username, datetime) {
-        var comment = document.getElementById("weigh-in-comment-input").value;
-        var listEle = document.getElementById("weigh-in-sidebar-comment-list");
+    this.submitComment = function() {
+        var username = 'Ben';
+        var datetime = new Date();
+
+        var comment = self.textfield.value;
+        // get comment data and pass to append message
+        dependencies.appStateService.getState().comments.push({username: username, datatime: datetime, comment: comment});
+        dependencies.appStateService.update();
+        self.textfield.value = "";
+        var list = self.el.querySelector("#weigh-in-sidebar-comment-list");
+        list.scrollTop = list.scrollHeight;
+    };
+
+    this.textfield.addEventListener('keypress', function (e) {
+       if(e.keyCode === 13) {
+           self.submitComment();
+       }
+    });
+
+    this.appendMessage = function(comment) {
+        var listEle = self.el.querySelector("#weigh-in-sidebar-comment-list");
         var newComment = document.createElement('li');
-        newComment.innerHTML = '<div><span class="weigh-in-username">'+username+'</span>: '+comment+'</div>' +
-            '<div class="weigh-in-datetime">'+moment(datetime).fromNow()+'</div>';
+        newComment.innerHTML = '<div><span class="weigh-in-username">'+comment.username+'</span>: '+comment.comment+'</div>' +
+            '<div class="weigh-in-datetime">'+moment(comment.datetime).fromNow()+'</div>';
         listEle.appendChild(newComment);
     };
 
     var sendButton = this.el.querySelector('#weigh-in-send-button');
     // onClick's logic below:
-    sendButton.addEventListener('click', function() {
-        var username = 'Ben';
-        var datetime = new Date();
-        // get comment data and pass to append message
-        self.appendMessage(username, datetime);
+    sendButton.addEventListener('click', this.submitComment());
+
+
+    dependencies.appStateService.subscribe(function () {
+        dependencies.appStateService.getState().comments.forEach(function (comment) {
+            self.appendMessage(comment);
+        });
     });
 
-    this.timerFunction = function() {
-        var commentsDates = self.el.querySelectorAll('.weigh-in-datetime');
-        for(i=0; i < commentsDates.length; i++)
-            commentsDates.value='testest';
-    }
+    dependencies.appStateService.getState().comments.forEach(function (comment) {
+        self.appendMessage(comment);
+    });
 
-    var commentTimer = setInterval(this.timerFunction, 5000);
+    // this.timerFunction = function() {
+    //     var commentsDates = self.el.querySelectorAll('.weigh-in-datetime');
+    //     for(i=0; i < commentsDates.length; i++)
+    //         commentsDates.value='testest';
+    // };
+    //
+    // var commentTimer = setInterval(this.timerFunction, 5000);
 
     this.wrapPageContent();
 }

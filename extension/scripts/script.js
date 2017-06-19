@@ -12,7 +12,6 @@ window.onload = function () {
         else
             enablePlugIn(false);
     });
-
 };
 
 function enablePlugIn(enabled) {

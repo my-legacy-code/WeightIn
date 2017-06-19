@@ -20,4 +20,7 @@
         });
     };
     this.handleStateChange();
+    chrome.storage.sync.get('weighIn-enabled', function(values){
+        self.updateIcon(values['weighIn-enabled']);
+    });
 })();
