@@ -29,4 +29,11 @@
     chrome.storage.sync.get('weighIn-enabled', function(values){
         self.enablePlugIn(values['weighIn-enabled']);
     });
+
+    this.commentService = new CommentService();
+    this.commentService.getComments(window.location.href).then(function (comments) {
+        console.log(comments);
+        self.appStateService.getState().comments = comments;
+        self.appStateService.update();
+    });
 })();

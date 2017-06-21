@@ -20,7 +20,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["app/components/app.component.css", "app/components/sidebar.component.css", "app/components/message-box.component.css"],
-      "js": ["node_modules/moment/min/moment.min.js", "app/services/app-state.service.js", "app/components/sidebar.component.js","app/components/message-box.component.js", "app/components/app.component.js"]
+      "js": ["node_modules/moment/min/moment.min.js", "app/helpers/request.js", "app/services/comment.service.js","app/services/app-state.service.js", "app/components/sidebar.component.js","app/components/message-box.component.js", "app/components/app.component.js"]
     }
   ],
   "permissions": [

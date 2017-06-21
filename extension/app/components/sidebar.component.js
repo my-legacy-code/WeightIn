@@ -39,7 +39,7 @@ function SideBarComponent(dependencies) {
     };
 
     this.submitComment = function() {
-        var username = 'Ben';
+        var username = dependencies.appStateService.getState().currentUser.username;
         var datetime = new Date();
 
         var comment = self.textfield.value;
@@ -60,14 +60,14 @@ function SideBarComponent(dependencies) {
     this.appendMessage = function(comment) {
         var listEle = self.el.querySelector("#weigh-in-sidebar-comment-list");
         var newComment = document.createElement('li');
-        newComment.innerHTML = '<div><span class="weigh-in-username">'+comment.username+'</span>: '+comment.comment+'</div>' +
-            '<div class="weigh-in-datetime">'+moment(comment.datetime).fromNow()+'</div>';
+        newComment.innerHTML = '<div><span class="weigh-in-username">'+comment.user+'</span>: '+comment.body+'</div>' +
+            '<div class="weigh-in-datetime">'+moment(comment.created_at).fromNow()+'</div>';
         listEle.appendChild(newComment);
     };
 
     var sendButton = this.el.querySelector('#weigh-in-send-button');
     // onClick's logic below:
-    sendButton.addEventListener('click', this.submitComment());
+    sendButton.addEventListener('click', this.submitComment);
 
 
     dependencies.appStateService.subscribe(function () {
@@ -79,14 +79,6 @@ function SideBarComponent(dependencies) {
     dependencies.appStateService.getState().comments.forEach(function (comment) {
         self.appendMessage(comment);
     });
-
-    // this.timerFunction = function() {
-    //     var commentsDates = self.el.querySelectorAll('.weigh-in-datetime');
-    //     for(i=0; i < commentsDates.length; i++)
-    //         commentsDates.value='testest';
-    // };
-    //
-    // var commentTimer = setInterval(this.timerFunction, 5000);
 
     this.wrapPageContent();
 }
