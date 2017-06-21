@@ -18,7 +18,7 @@ class CommentController < ApplicationController
     puts comments
 
 
-    render :json => convert_to_json(comments)
+    render :json => comments
   end
 
 end
