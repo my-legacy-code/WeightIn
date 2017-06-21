@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["assets/styles/style.css", "app/components/app.component.css", "app/components/sidebar.component.css", "app/components/message-box.component.css"],
+      "css": ["app/components/app.component.css", "app/components/sidebar.component.css", "app/components/message-box.component.css"],
       "js": ["node_modules/moment/min/moment.min.js", "app/services/app-state.service.js", "app/components/sidebar.component.js","app/components/message-box.component.js", "app/components/app.component.js"]
     }
   ],
