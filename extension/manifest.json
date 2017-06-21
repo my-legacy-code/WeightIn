@@ -4,23 +4,23 @@
   "description": "This extension allows users to highlight and comment on articles",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "images/icon128-grey.png",
+    "default_icon": "assets/images/icon128-grey.png",
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "images/icon16.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png",
-    "256": "images/icon256.png"
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png",
+    "256": "assets/images/icon256.png"
   },
   "background": {
-    "scripts": ["scripts/app/services/context-menu.service.js", "scripts/background.js"]
+    "scripts": ["app/services/context-menu.service.js", "background.js"]
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["styles/style.css", "styles/app/app.component.css", "styles/app/sidebar.component.css", "styles/app/message-box.component.css"],
-      "js": ["scripts/app/moment.js", "scripts/app/services/app-state.service.js", "scripts/app/components/sidebar.component.js","scripts/app/components/message-box.component.js", "scripts/app/components/app.component.js"]
+      "css": ["assets/styles/style.css", "app/components/app.component.css", "app/components/sidebar.component.css", "app/components/message-box.component.css"],
+      "js": ["node_modules/moment/min/moment.min.js", "app/services/app-state.service.js", "app/components/sidebar.component.js","app/components/message-box.component.js", "app/components/app.component.js"]
     }
   ],
   "permissions": [

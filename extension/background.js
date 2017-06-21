@@ -1,26 +1,26 @@
-console.log( 'Background.html starting!' );
-	/*Put page action icon on all tabs*/
-	chrome.tabs.onUpdated.addListener(function(tabId) {
-		chrome.pageAction.show(tabId);
-	});
+(function BackgroundService() {
+    var self = this;
+    this.contextMenuService = new ContextMenuService();
 
-	chrome.tabs.getSelected(null, function(tab) {
-		chrome.pageAction.show(tab.id);
-	});
-	
-	/*Send request to current tab when page action is clicked*/
-	chrome.pageAction.onClicked.addListener(function(tab) {
-		chrome.tabs.getSelected(null, function(tab) {
-			chrome.tabs.sendRequest(
-				//Selected tab id
-				tab.id,
-				//Params inside a object data
-				{callFunction: "toggleSidebar"}, 
-				//Optional callback function
-				function(response) {
-					console.log(response);
-				}
-			);
-		});
-	});
-console.log( 'Background.html done.' );
+    this.updateIcon = function (enabled) {
+        if(enabled) chrome.browserAction.setIcon({path: 'images/icon128.png'});
+        else chrome.browserAction.setIcon({path: 'images/icon128-grey.png'});
+    };
+
+    this.handleStateChange = function () {
+        chrome.storage.onChanged.addListener(function (changes) {
+            for (var key in changes)
+                switch (key) {
+                    case 'weighIn-enabled':
+                        self.contextMenuService.enableContextMenu(changes[key].newValue);
+                        self.updateIcon(changes[key].newValue);
+                        break;
+
+                }
+        });
+    };
+    this.handleStateChange();
+    chrome.storage.sync.get('weighIn-enabled', function(values){
+        self.updateIcon(values['weighIn-enabled']);
+    });
+})();
