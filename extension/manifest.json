@@ -33,9 +33,12 @@
       "js": [
         "node_modules/moment/min/moment.min.js",
         "node_modules/handlebars/dist/handlebars.js",
+        "node_modules/actioncable-js/dist/action_cable.js",
         "shared/helpers/constant.js",
         "shared/services/state.service.js",
+        "shared/states/app.state.js",
         "app/helpers/request.js",
+        "app/helpers/uuid.min.js",
         "app/services/comment.service.js",
         "app/services/app-state.service.js",
         "app/components/component.js",

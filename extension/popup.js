@@ -8,7 +8,7 @@ PopupStateService.prototype.handleState = function (state) {
     var self = this;
     Object.keys(state).forEach(function (key) {
         switch (key) {
-            case Constant.EXTENSION_ENABLED:
+            case AppState.EXTENSION_ENABLED:
                 self.state.extensionEnabled = state[key];
                 var storageState = {};
                 storageState[key] = state[key];
@@ -20,9 +20,9 @@ PopupStateService.prototype.handleState = function (state) {
 
 PopupStateService.prototype.initState = function () {
     var self = this;
-    chrome.storage.sync.get(Constant.EXTENSION_ENABLED, function (values) {
+    chrome.storage.sync.get(AppState.EXTENSION_ENABLED, function (values) {
         var state = {};
-        state[Constant.EXTENSION_ENABLED] = values[Constant.EXTENSION_ENABLED];
+        state[AppState.EXTENSION_ENABLED] = values[AppState.EXTENSION_ENABLED];
         self.set(state);
     });
 };
@@ -37,7 +37,7 @@ window.onload = function () {
 
     toggleSwitch.addEventListener('change', function () {
         var state = {};
-        state[Constant.EXTENSION_ENABLED] = toggleSwitch.checked;
+        state[AppState.EXTENSION_ENABLED] = toggleSwitch.checked;
         self.popupStateService.set(state);
     });
 

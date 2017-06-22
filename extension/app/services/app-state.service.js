@@ -8,8 +8,11 @@ AppStateService.prototype.handleState = function (state) {
     var self = this;
     Object.keys(state).forEach(function (key) {
         switch (key) {
-            case Constant.EXTENSION_ENABLED:
+            case AppState.EXTENSION_ENABLED:
                 self.state.extensionEnabled = state[key];
+                break;
+            case AppState.COMMENTS:
+                self.state.comments = state[key];
                 break;
         }
     });
@@ -22,9 +25,9 @@ AppStateService.prototype.initState = function () {
     chrome.storage.onChanged.addListener(function (changes) {
         for (var key in changes)
             switch (key) {
-                case Constant.EXTENSION_ENABLED:
+                case AppStateService.states.EXTENSION_ENABLED:
                     var state = {};
-                    state[Constant.EXTENSION_ENABLED] = changes[key].newValue;
+                    state[AppState.EXTENSION_ENABLED] = changes[key].newValue;
                     console.log('AppStateService', state);
                     self.set(state);
                     break;
@@ -34,9 +37,9 @@ AppStateService.prototype.initState = function () {
     });
 
     var self = this;
-    chrome.storage.sync.get(Constant.EXTENSION_ENABLED, function (values) {
+    chrome.storage.sync.get(AppState.EXTENSION_ENABLED, function (values) {
         var state = {};
-        state[Constant.EXTENSION_ENABLED] = values[Constant.EXTENSION_ENABLED];
+        state[AppState.EXTENSION_ENABLED] = values[AppState.EXTENSION_ENABLED];
         self.set(state);
     });
 };

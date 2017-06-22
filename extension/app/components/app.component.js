@@ -13,12 +13,19 @@
             self.sidebar.hide();
     });
 
-
-    this.commentService = new CommentService();
-    this.commentService.getComments(window.location.href).then(function (comments) {
-        self.appStateService.getState().comments = comments;
-        self.appStateService.notify();
-    });
-
     this.appStateService.initState();
+
+    this.commentService = new CommentService({
+        receiveAllComments: function (comments) {
+            self.appStateService.set({
+                'comments': comments
+            })
+        }
+    });
+    // this.commentService.getComments(window.location.href).then(function (comments) {
+    //     self.appStateService.getState().comments = comments;
+    //     self.appStateService.notify();
+    // });
+
+
 })();
