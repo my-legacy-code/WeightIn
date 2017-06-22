@@ -1,0 +1,21 @@
+<div class="weigh-in-sidebar-header">
+    <img class="icon" src="https://s3.us-east-2.amazonaws.com/weigh-in/icon256.png"/>
+    <div class="title"><span>{{comments.length}}</span> Comments</div>
+</div>
+<ul id="weigh-in-sidebar-comment-list">
+    {{#each comments}}
+    <li>
+        <div><span class="weigh-in-username">{{user}}</span>:&nbsp;{{body}}</div>
+        <div class="weigh-in-datetime">{{created_at}}</div>
+    </li>
+    {{/each}}
+</ul>
+<div class="weigh-in-new-comment-box">
+    <div>
+        <textarea id="weigh-in-comment-input" class="weigh-in-comment-input"
+                  placeholder="Please type your message here."></textarea>
+    </div>
+    <div>
+        <div id="weigh-in-send-button" class="weigh-in-send-button">Send</div>
+    </div>
+</div>

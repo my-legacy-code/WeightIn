@@ -3,37 +3,22 @@
 
     this.appStateService = new AppStateService();
 
-    this.enablePlugIn = function (enabled) {
-        if (enabled) self.sidebar.show();
-        else self.sidebar.hide();
-    };
-
-    this.handleStateChange = function () {
-        chrome.storage.onChanged.addListener(function (changes) {
-            for (var key in changes)
-                switch (key) {
-                    case 'weighIn-enabled':
-                        self.enablePlugIn(changes[key].newValue);
-                        break;
-
-                }
-        });
-    };
     this.sidebar = new SideBarComponent({appStateService: this.appStateService});
     document.body.appendChild(this.sidebar.el);
 
-    this.messageBox = new MessageBoxComponent();
-
-    this.handleStateChange();
-
-    chrome.storage.sync.get('weighIn-enabled', function(values){
-        self.enablePlugIn(values['weighIn-enabled']);
+    this.appStateService.subscribe(function () {
+        if(self.appStateService.getState().extensionEnabled)
+            self.sidebar.show();
+        else
+            self.sidebar.hide();
     });
+
 
     this.commentService = new CommentService();
     this.commentService.getComments(window.location.href).then(function (comments) {
-        console.log(comments);
         self.appStateService.getState().comments = comments;
-        self.appStateService.update();
+        self.appStateService.notify();
     });
+
+    this.appStateService.initState();
 })();

@@ -12,3 +12,11 @@ Request.get = function (url, queryParams) {
         req.send(null);
     });
 };
+
+Request.getSyn = function (url, queryParams) {
+    var req = new XMLHttpRequest();
+    req.open('GET', url, false);
+
+    req.send(null);
+    return req.responseText;
+};

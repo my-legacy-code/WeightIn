@@ -14,17 +14,42 @@
     "256": "assets/images/icon256.png"
   },
   "background": {
-    "scripts": ["app/services/context-menu.service.js", "background.js"]
+    "scripts": [
+      "app/services/context-menu.service.js",
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "css": ["app/components/app.component.css", "app/components/sidebar.component.css", "app/components/message-box.component.css"],
-      "js": ["node_modules/moment/min/moment.min.js", "app/helpers/request.js", "app/services/comment.service.js","app/services/app-state.service.js", "app/components/sidebar.component.js","app/components/message-box.component.js", "app/components/app.component.js"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "app/components/app.component.css",
+        "app/components/sidebar.component.css",
+        "app/components/message-box.component.css"
+      ],
+      "js": [
+        "node_modules/moment/min/moment.min.js",
+        "node_modules/handlebars/dist/handlebars.js",
+        "shared/helpers/constant.js",
+        "shared/services/state.service.js",
+        "app/helpers/request.js",
+        "app/services/comment.service.js",
+        "app/services/app-state.service.js",
+        "app/components/component.js",
+        "app/components/sidebar.component.js",
+        "app/components/message-box.component.js",
+        "app/components/app.component.js"
+      ]
     }
   ],
   "permissions": [
     "storage",
     "contextMenus"
+  ],
+  "web_accessible_resources": [
+    "*.html"
   ]
 }
