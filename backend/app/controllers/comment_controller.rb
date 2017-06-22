@@ -1,23 +1,20 @@
 class CommentController < ApplicationController
 
   def update
-    message_json = params[:comment]
-    user = message_json[:user]
-    url = message_json[:url]
-    body = message_json[:text]
+    comment_json = params.require(:comment).permit(:user, :url, :body)
+    user = comment_json[:user]
+    url = comment_json[:url]
+    body = comment_json[:body]
 
 
-    message = Comment.new(user: user,  url: url, body: body)
-    puts message
-    message.save!
-
+    comment = Comment.new(user: user,  url: url, body: body)
+    comment.save!
+    ActionCable.server.broadcast "new_comment_#{url}", comment: comment
+    head :ok
   end
 
   def show
     comments = Comment.where(url: params[:url])
-    puts comments
-
-
     render :json => comments
   end
 

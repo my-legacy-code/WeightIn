@@ -1,8 +1,12 @@
 development:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
+  channel_prefix: weighin_rails_development
 
 test:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
+  channel_prefix: weighin_rails_test
 
 production:
   adapter: redis

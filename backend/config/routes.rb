@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   get '/comments' => 'comment#show'
   post '/comments' => 'comment#update'
+  mount ActionCable.server => '/cable'
+
 end
