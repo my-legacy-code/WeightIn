@@ -22,6 +22,9 @@ function CommentService(receiveDataCallbacks) {
                     case 'all_comments':
                         receiveDataCallbacks.receiveAllComments(data['comments']);
                         break;
+                    case 'new_comment':
+                        receiveDataCallbacks.receiveNewComment(data['comment']);
+                        break;
                 }
             }
         });

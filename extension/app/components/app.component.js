@@ -14,18 +14,16 @@
     });
 
     this.appStateService.initState();
-
     this.commentService = new CommentService({
         receiveAllComments: function (comments) {
             self.appStateService.set({
                 'comments': comments
             })
+        },
+        receiveNewComment: function (comment) {
+            self.appStateService.addComment(comment);
         }
     });
-    // this.commentService.getComments(window.location.href).then(function (comments) {
-    //     self.appStateService.getState().comments = comments;
-    //     self.appStateService.notify();
-    // });
 
 
 })();

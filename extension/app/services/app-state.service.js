@@ -18,6 +18,15 @@ AppStateService.prototype.handleState = function (state) {
     });
 };
 
+AppStateService.prototype.addComment = function (comment) {
+    console.log(this.state);
+    var comments = this.state.comments.map(function (comment) { return comment });
+    comments.push(comment);
+    var states = {};
+    states[AppState.COMMENTS] = comments;
+    this.set(states);
+};
+
 AppStateService.prototype.initState = function () {
     this.state['comments'] = [];
     this.state['currentUser'] = 'Harry';
