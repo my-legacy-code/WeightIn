@@ -34,7 +34,7 @@ AppStateService.prototype.initState = function () {
     chrome.storage.onChanged.addListener(function (changes) {
         for (var key in changes)
             switch (key) {
-                case AppStateService.states.EXTENSION_ENABLED:
+                case AppState.EXTENSION_ENABLED:
                     var state = {};
                     state[AppState.EXTENSION_ENABLED] = changes[key].newValue;
                     console.log('AppStateService', state);

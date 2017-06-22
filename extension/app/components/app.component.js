@@ -3,8 +3,6 @@
 
     this.appStateService = new AppStateService();
 
-    this.sidebar = new SideBarComponent({appStateService: this.appStateService});
-    document.body.appendChild(this.sidebar.el);
 
     this.appStateService.subscribe(function () {
         if(self.appStateService.getState().extensionEnabled)
@@ -25,5 +23,7 @@
         }
     });
 
-
+    this.sidebar = new SideBarComponent({appStateService: this.appStateService, commentService: this.commentService});
+    document.body.appendChild(this.sidebar.el);
+    this.commentService.start();
 })();

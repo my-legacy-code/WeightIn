@@ -26,23 +26,25 @@ function SideBarComponent(dependencies) {
 
     this.addComment = function() {
         var user = dependencies.appStateService.getState().currentUser,
-            created_at = new Date(),
-            body = self.textfield.value,
-            list = self.el.querySelector("#weigh-in-sidebar-comment-list");
+            body = self.textfield.value;
 
-        dependencies.appStateService.getState().comments.push({user: user, created_at: created_at, body: body});
-        dependencies.appStateService.notify();
+        dependencies.commentService.addComment(user, window.location.href, body);
         self.textfield.value = "";
+        self.scrollToBottom();
+    };
+
+    this.scrollToBottom = function () {
+        var list = this.el.querySelector("#weigh-in-sidebar-comment-list");
         list.scrollTop = list.scrollHeight;
     };
 
     dependencies.appStateService.subscribe(function () {
-        console.log(dependencies.appStateService.getState().comments);
         self.update({comments: dependencies.appStateService.getState().comments.map(function (comment) {
             var newComment = Object.create(comment);
             newComment.created_at = moment(comment.created_at).fromNow();
             return newComment;
         })});
+        self.scrollToBottom();
     });
 
 
