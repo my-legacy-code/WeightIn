@@ -9,7 +9,7 @@ class CommentController < ApplicationController
 
     comment = Comment.new(user: user,  url: url, body: body)
     comment.save!
-    ActionCable.server.broadcast "new_comment_#{url}", comment: comment
+    ActionCable.server.broadcast "new_comment_#{url}",  message_type: :new_comment, comment: comment
     head :ok
   end
 
