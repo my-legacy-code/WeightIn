@@ -29,6 +29,11 @@ AppStateService.prototype.addComment = function (comment) {
 AppStateService.prototype.initState = function () {
     this.state['comments'] = [];
     this.state['currentUser'] = 'Harry';
+    this.state['highlights'] = [
+        {
+
+        }
+    ];
 
     chrome.storage.onChanged.addListener(function (changes) {
         for (var key in changes)

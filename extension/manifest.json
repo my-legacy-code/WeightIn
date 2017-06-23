@@ -44,6 +44,7 @@
         "app/services/comment.service.js",
         "app/services/app-state.service.js",
         "app/components/component.js",
+        "app/components/highlights.component.js",
         "app/components/sidebar.component.js",
         "app/components/message-box.component.js",
         "app/components/app.component.js"

@@ -22,6 +22,9 @@
         }
     });
 
+
+    this.highlightsComponent = new HighlightsComponent({container: document.body});
+
     this.sidebar = new SideBarComponent({appStateService: this.appStateService, commentService: this.commentService});
     document.body.appendChild(this.sidebar.el);
     this.commentService.start();
