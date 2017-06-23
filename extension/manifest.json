@@ -15,8 +15,11 @@
   },
   "background": {
     "scripts": [
-      "app/services/context-menu.service.js",
-      "background.js"
+      "app/states/app.state.js",
+      "background/helpers/request.js",
+      "background/services/context-menu.service.js",
+      "shared/messages/request.message.js",
+      "background/daemon.js"
     ]
   },
   "content_scripts": [
@@ -34,10 +37,9 @@
         "node_modules/moment/min/moment.min.js",
         "node_modules/handlebars/dist/handlebars.js",
         "node_modules/actioncable-js/dist/action_cable.js",
-        "shared/helpers/constant.js",
-        "shared/services/state.service.js",
-        "shared/states/app.state.js",
-        "app/helpers/request.js",
+        "shared/messages/request.message.js",
+        "app/services/state.service.js",
+        "app/states/app.state.js",
         "app/helpers/uuid.min.js",
         "app/services/comment.service.js",
         "app/services/app-state.service.js",

@@ -19,17 +19,9 @@ Request.request = function (url, method, data, headers) {
 };
 
 Request.get = function (url, queryParams) {
-    Request.request(url,'GET');
+    return Request.request(url,'GET');
 };
 
 Request.post = function (url, queryParams, data, headers) {
-    Request.request(url,'POST', data, headers);
-};
-
-Request.getSyn = function (url, queryParams) {
-    var req = new XMLHttpRequest();
-    req.open('GET', url, false);
-
-    req.send(null);
-    return req.responseText;
+    return Request.request(url,'POST', data, headers);
 };

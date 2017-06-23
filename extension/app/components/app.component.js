@@ -1,14 +1,13 @@
-window.onload = function AppComponent() {
+(function AppComponent() {
     var self = this;
 
     this.appStateService = new AppStateService();
-
-
     this.appStateService.subscribe(function () {
-        if(self.appStateService.getState().extensionEnabled)
+        if (self.appStateService.getState().extensionEnabled) {
             self.sidebar.show();
-        else
+        } else {
             self.sidebar.hide();
+        }
     });
 
     this.appStateService.initState();
@@ -26,4 +25,4 @@ window.onload = function AppComponent() {
     this.sidebar = new SideBarComponent({appStateService: this.appStateService, commentService: this.commentService});
     document.body.appendChild(this.sidebar.el);
     this.commentService.start();
-};
+})();

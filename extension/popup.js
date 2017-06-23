@@ -35,7 +35,7 @@ window.onload = function () {
 
     var toggleSwitch = document.querySelector('#switch-toggle');
 
-    toggleSwitch.addEventListener('change', function () {
+    toggleSwitch.addEventListener('click', function () {
         var state = {};
         state[AppState.EXTENSION_ENABLED] = toggleSwitch.checked;
         self.popupStateService.set(state);

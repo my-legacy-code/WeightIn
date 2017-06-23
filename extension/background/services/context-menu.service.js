@@ -5,7 +5,7 @@ function ContextMenuService() {
             title: "Add new message to %s",
             contexts: ["selection"],
             onclick: function () {
-                alert("CLick");
+               console.log("Clicked");
             }
         }, function () {
             // chrome.storage.sync.set({'weighIn-enabled': enabled});
@@ -15,10 +15,5 @@ function ContextMenuService() {
     this.hide = function () {
         if(self.menu)
             chrome.contextMenus.remove(self.menu);
-    };
-
-    this.enableContextMenu = function(enabled){
-        if(enabled) self.show();
-        else self.hide();
     };
 }

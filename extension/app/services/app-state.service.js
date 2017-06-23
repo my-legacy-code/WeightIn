@@ -19,7 +19,6 @@ AppStateService.prototype.handleState = function (state) {
 };
 
 AppStateService.prototype.addComment = function (comment) {
-    console.log(this.state);
     var comments = this.state.comments.map(function (comment) { return comment });
     comments.push(comment);
     var states = {};
@@ -42,7 +41,6 @@ AppStateService.prototype.initState = function () {
                     break;
 
             }
-        self.notify();
     });
 
     var self = this;

@@ -44,12 +44,21 @@ CommentService.prototype.addComment = function (user, url, comment) {
     var headers = {
         'Content-Type': 'application/json'
     };
-    Request.post(this.serverURL + '/comments', null, JSON.stringify({
+    var data = JSON.stringify({
         comment: {
             "user": user,
             "url": url,
             "body": comment
         }
-    }), headers);
+    });
+    chrome.runtime.sendMessage({
+        id: RequestMessage.POST,
+        request: {
+            url: this.serverURL + '/comments',
+            queryParams: null,
+            data: data,
+            headers: headers
+        }
+    });
 };
 
