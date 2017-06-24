@@ -44,6 +44,7 @@
         "app/services/state.service.js",
         "app/states/app.state.js",
         "app/helpers/uuid.min.js",
+        "app/services/real-time.service.js",
         "app/services/comment.service.js",
         "app/services/app-state.service.js",
         "app/components/component.js",

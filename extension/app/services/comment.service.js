@@ -1,12 +1,5 @@
-function CommentService(receiveDataCallbacks) {
-    var serverName = 'localhost';
-    var serverPort = 3000;
-    var serverNamePort = serverName + ':' + serverPort;
-    this.serverURL = 'http://' + serverNamePort;
-    this.webSocketURI = 'ws://' + serverNamePort;
-    ActionCable.startDebugging();
-    this.cable = ActionCable.createConsumer(this.webSocketURI + '/cable');
-    var self = this;
+function CommentService(dependencies) {
+    this.realTimeService = dependencies.realTimeService;
     this.channelHandlers = {
         connected: function () {
             console.log("connected", this.identifier)
@@ -20,10 +13,10 @@ function CommentService(receiveDataCallbacks) {
                 return;
             switch (data['message_type']) {
                 case 'all_comments':
-                    receiveDataCallbacks.receiveAllComments(data['comments']);
+                    dependencies.receiveAllComments(data['comments']);
                     break;
                 case 'new_comment':
-                    receiveDataCallbacks.receiveNewComment(data['comment']);
+                    dependencies.receiveNewComment(data['comment']);
                     break;
             }
         }
@@ -32,7 +25,7 @@ function CommentService(receiveDataCallbacks) {
 
 CommentService.prototype.start = function () {
 
-    this.cable.subscriptions.create({
+    this.realTimeService.subscribe({
             channel: "NewCommentChannel",
             id: uuidv4(),
             url: window.location.href

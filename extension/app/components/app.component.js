@@ -11,7 +11,9 @@ function AppComponent() {
     });
 
     this.appStateService.initState();
+    this.realTimeService = new RealTimeService();
     this.commentService = new CommentService({
+        realTimeService: this.realTimeService,
         receiveAllComments: function (comments) {
             self.appStateService.set({
                 'comments': comments
