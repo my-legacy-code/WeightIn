@@ -103,5 +103,3 @@ function HighlightService(dependencies) {
     //     }
     // };
 }
-
-HighlightService.prototype.updateURL

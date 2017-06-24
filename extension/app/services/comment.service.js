@@ -33,7 +33,6 @@ CommentService.prototype.receiveAllComments = function (comments) {
 };
 
 CommentService.prototype.receiveNewComment = function (comment) {
-    console.log("+++++");
     let comments = this.appStateService.getState().comments.map(function (comment) { return comment });
     comments.push(comment);
     let states = {};
