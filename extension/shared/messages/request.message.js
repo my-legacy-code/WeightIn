@@ -1,3 +1,3 @@
 function RequestMessage() {}
-RequestMessage.GET = 4;
-RequestMessage.POST = 5;
+RequestMessage.GET = 0;
+RequestMessage.POST = 1;

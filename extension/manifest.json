@@ -19,6 +19,7 @@
       "background/helpers/request.js",
       "background/services/context-menu.service.js",
       "shared/messages/request.message.js",
+      "shared/messages/selection.message.js",
       "background/daemon.js"
     ]
   },
@@ -31,13 +32,15 @@
       "css": [
         "app/components/app.component.css",
         "app/components/sidebar.component.css",
-        "app/components/message-box.component.css"
+        "app/components/message-box.component.css",
+        "app/components/highlights.component.css"
       ],
       "js": [
         "node_modules/moment/min/moment.min.js",
         "node_modules/handlebars/dist/handlebars.js",
         "node_modules/actioncable-js/dist/action_cable.js",
         "shared/messages/request.message.js",
+        "shared/messages/selection.message.js",
         "app/services/state.service.js",
         "app/states/app.state.js",
         "app/helpers/uuid.min.js",
