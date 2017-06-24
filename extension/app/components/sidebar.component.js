@@ -29,22 +29,13 @@ function SideBarComponent(dependencies) {
     this.width = 350;
     var self = this;
     this.show = function () {
-        self.page.style.width = (document.documentElement.offsetWidth - this.width) + 'px';
+        document.body.style.right = this.width + 'px';
         this.el.style.right = '0';
     };
 
     this.hide = function () {
-        self.page.style.width = document.documentElement.offsetWidth + 'px';
+        document.body.style.right = '0';
         this.el.style.right = (-self.width) + 'px';
-    };
-
-    this.wrapPageContent = function () {
-        self.page = document.createElement("weight-in-page");
-
-        while (document.body.firstChild)
-            this.page.appendChild(document.body.firstChild);
-        document.body.appendChild(this.page);
-        self.hide();
     };
 
     this.addComment = function () {
@@ -76,9 +67,6 @@ function SideBarComponent(dependencies) {
         });
         self.scrollToBottom();
     });
-
-
-    this.wrapPageContent();
 }
 
 SideBarComponent.prototype = Object.create(Component.prototype);
