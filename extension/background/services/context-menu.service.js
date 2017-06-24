@@ -2,7 +2,7 @@ function ContextMenuService() {
     var self = this;
     this.menus = [];
     this.createMenu = function (name, color) {
-        chrome.contextMenus.create({
+        return chrome.contextMenus.create({
             title: `Mark as ${name}`,
             contexts: ["selection"],
             onclick: function (info, tab) {
@@ -13,9 +13,8 @@ function ContextMenuService() {
     };
 
     this.show = function () {
-
         let redMenu = self.createMenu('false', 'red'),
-            greenMenu = self.createMenu('trustworthy','green'),
+            greenMenu = self.createMenu('trustworthy', 'green'),
             yellowMenu = self.createMenu('yellow', 'yellow'),
             blueMenu = self.createMenu('blue', 'blue'),
             purpleMenu = self.createMenu('purple', 'purple');
@@ -24,9 +23,7 @@ function ContextMenuService() {
     };
 
     this.hide = function () {
-       if(self.menus.length > 0)
-           self.menus.forEach(function (menu) {
-               chrome.contextMenus.remove(menu);
-           });
+        while (self.menus.length > 0)
+            chrome.contextMenus.remove(self.menus.pop());
     };
 }

@@ -13,6 +13,7 @@
     });
 
     this.enabledExtension = function (enabled) {
+
         if (enabled) {
             self.contextMenuService.show();
             chrome.browserAction.setIcon({path: 'assets/images/icon128.png'});

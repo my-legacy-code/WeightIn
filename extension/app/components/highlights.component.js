@@ -87,6 +87,7 @@ function HighlightsComponent(dependencies) {
     };
 
     this.highlights = this.data[window.location.href];
+    if(!this.highlights) this.highlights = [];
     this.assignUniqueIDs = function () {
         let queue = Array.from(dependencies.container.childNodes);
         while (queue.length > 0) {
