@@ -2,92 +2,14 @@ function HighlightsComponent(dependencies) {
     let self = this;
 
     this.currentId = 0;
+    this.appStateService = dependencies.appStateService;
+    this.highlightService = dependencies.highlightService;
+    this.highlights = [];
 
     let DATA_ID_ATTRIBUTE = 'data-weigh-in-id',
         DATA_POSITION_ATTRIBUTE = 'data-weigh-in-position',
         WEIGH_IN_HIGHLIGHTED_NODE = 'weigh-in-highlighted';
 
-    this.data = {
-        'https://developer.chrome.com/extensions/messaging': [
-            {
-                color: 'green',
-                end: 78,
-                id: 2208,
-                parentId: 43,
-                previousSiblingId: -1,
-                start: 7,
-                position: 0
-            },
-            {
-                color: 'red',
-                end: 74,
-                id: 2209,
-                parentId: 43,
-                previousSiblingId: 2208,
-                start: 6,
-                position: 1
-            }
-        ],
-        'http://eloquentjavascript.net/01_values.html': [
-            {
-                id: 579,
-                parentId: 4,
-                previousSiblingId: 121,
-                start: 7,
-                end: 48,
-                color: 'red',
-                position: 0
-            },
-            {
-                id: 580,
-                parentId: 4,
-                previousSiblingId: 579,
-                start: 1,
-                end: 19,
-                color: 'blue',
-                position: 1
-            },
-            {
-                id: 581,
-                parentId: 4,
-                previousSiblingId: 580,
-                start: 1,
-                end: 13,
-                color: 'purple',
-                position: 2
-            },
-            {
-                id: 582,
-                parentId: 4,
-                previousSiblingId: 581,
-                start: 1,
-                end: 68,
-                color: 'yellow',
-                position: 3
-            },
-            {
-                id: 583,
-                parentId: 4,
-                previousSiblingId: 582,
-                start: 1,
-                end: 83,
-                color: 'green',
-                position: 4
-            },
-            {
-                color: "red",
-                end: 76,
-                id: 584,
-                parentId: 5,
-                previousSiblingId: 122,
-                start: 5,
-                position: 0
-            }
-        ]
-    };
-
-    this.highlights = this.data[window.location.href];
-    if(!this.highlights) this.highlights = [];
     this.assignUniqueIDs = function () {
         let queue = Array.from(dependencies.container.childNodes);
         while (queue.length > 0) {
@@ -99,6 +21,7 @@ function HighlightsComponent(dependencies) {
     };
 
     this.assignUniqueIDs();
+    this.highlightId = this.currentId;
 
     this.addColorfulBackground = function (id, position, text, start, end, color, parentNode, startContainer) {
         let textBefore = text.substring(0, start);
@@ -120,23 +43,27 @@ function HighlightsComponent(dependencies) {
     };
 
     this.saveHighlight = function (highlight) {
-        self.incrementPositionsAfter(highlight.parentId, highlight.position);
-        this.highlights.push(highlight);
+        let highlightIDsAfterPosition = self.getHighlightIDsAfter(highlight.parentId, highlight.position);
+        self.highlightService.addHighlight(highlight, highlightIDsAfterPosition);
     };
 
-    this.incrementPositionsAfter = function (parentId, position) {
-        self.highlights.filter(function (highlight) {
-            return highlight.parentId === parentId && highlight.position >= position;
-        }).forEach(function (highlight) {
-            highlight.position++;
+    this.getHighlightIDsAfter = function (parentId, position) {
+        let siblings = Array.from(document.querySelectorAll(`[${DATA_ID_ATTRIBUTE}='${parentId}'] ${WEIGH_IN_HIGHLIGHTED_NODE}`));
+        return siblings.filter(function (sibling) {
+            return parseInt(sibling.getAttribute(DATA_POSITION_ATTRIBUTE)) >= position;
+        }).map(function (sibling) {
+            // sibling.setAttribute(DATA_POSITION_ATTRIBUTE, `${parseInt(sibling.getAttribute(DATA_POSITION_ATTRIBUTE)) + 1}`);
+            return parseInt(sibling.getAttribute(DATA_ID_ATTRIBUTE));
         });
 
-        let siblings = Array.from(document.querySelectorAll(`[${DATA_ID_ATTRIBUTE}='${parentId}'] ${WEIGH_IN_HIGHLIGHTED_NODE}`));
-        siblings.filter(function (sibling) {
-            return parseInt(sibling.getAttribute(DATA_POSITION_ATTRIBUTE)) >= position;
-        }).forEach(function (sibling) {
-            sibling.setAttribute(DATA_POSITION_ATTRIBUTE, `${parseInt(sibling.getAttribute(DATA_POSITION_ATTRIBUTE)) + 1}`);
-        })
+        // let highlights = self.appStateService.getState().highlights.filter(function (highlight) {
+        //     return highlight.parentId === parentId && highlight.position >= position;
+        // }).forEach(function (highlight) {
+        //     highlight.position++;
+        // });
+        //
+        // let state = {};
+        // state[AppState.HIGHLIGHTS] = highlights;
     };
 
     this.highlightSelection = function (color) {
@@ -147,7 +74,7 @@ function HighlightsComponent(dependencies) {
                 if (range.startContainer.nodeType === document.TEXT_NODE) {
                     let parentNode = range.startContainer.parentNode;
                     if (parentNode.hasAttributes(DATA_ID_ATTRIBUTE)) {
-                        let id = ++self.currentId;
+                        let id = ++self.highlightId;
                         let parentId = parseInt(parentNode.getAttribute(DATA_ID_ATTRIBUTE)),
                             previousSibling = range.startContainer.previousSibling;
                         let previousSiblingId = previousSibling ? parseInt(previousSibling.getAttribute(DATA_ID_ATTRIBUTE)) : -1;
@@ -161,17 +88,6 @@ function HighlightsComponent(dependencies) {
                             color: color,
                             position: position
                         });
-
-                        self.addColorfulBackground(
-                            id,
-                            position,
-                            range.startContainer.textContent,
-                            range.startOffset,
-                            range.endOffset,
-                            color,
-                            parentNode,
-                            range.startContainer
-                        );
                     }
                 }
             }
@@ -182,27 +98,58 @@ function HighlightsComponent(dependencies) {
         let parentNode = document.querySelector(`[${DATA_ID_ATTRIBUTE}='${highlight.parentId}']`),
             previousSibling = highlight.previousSiblingId !== -1 ? document.querySelector(`[${DATA_ID_ATTRIBUTE}='${highlight.previousSiblingId}']`) : null,
             startContainer = previousSibling ? previousSibling.nextSibling : parentNode.childNodes[0];
-
-        console.log(parentNode, previousSibling, startContainer);
-
         self.addColorfulBackground(highlight.id, highlight.position, startContainer.textContent, highlight.start, highlight.end, highlight.color, parentNode, startContainer);
-        self.currentId++;
+        self.highlightId++;
     };
 
-    console.log(this.currentId);
+    this.equals = function (object1, object2) {
+      return Object.keys(object1).every(key => object1[key] === object2[key]);
+    };
 
-    if (this.highlights) {
-        this.highlights.sort(function (highlight1, highlight2) {
-            return highlight1.position - highlight2.position;
-        }).forEach(this.renderHighlight);
-    }
+    this.appStateService.subscribe(function () {
+        let oldHighlights = {};
+        self.highlights.forEach(function (highlight) {
+            oldHighlights[highlight.id] = highlight;
+        });
+
+        let newHighlights = {};
+        self.appStateService.getState().highlights.forEach(function (highlight) {
+            newHighlights[highlight.id] = highlight;
+        });
+
+
+        let updatedHighlights = Object.keys(newHighlights).filter(id => id in oldHighlights &&
+        !self.equals(newHighlights[id], oldHighlights[id])).map(id => newHighlights[id]);
+
+        let deletedHighlightIDs = Object.keys(oldHighlights).filter(function (oldHighlightID) {
+            return !(oldHighlightID in newHighlights);
+        });
+
+        let addedHighlights = Object.keys(newHighlights).filter(function (newHighlightId) {
+            return !(newHighlightId in oldHighlights);
+        }).map(function (addedHighlightID) {
+            return newHighlights[addedHighlightID];
+        });
+
+        updatedHighlights.forEach(updatedHighlight => {
+            let highlightEl = document.querySelector(`[${DATA_ID_ATTRIBUTE}='${updatedHighlight.id}']`);
+            highlightEl.setAttribute(DATA_POSITION_ATTRIBUTE, updatedHighlight.position);
+        });
+
+        addedHighlights.sort(function (highlight1, highlight2) {
+                    return highlight1.position - highlight2.position;
+        }).forEach(self.renderHighlight);
+
+        self.highlights = self.appStateService.getState().highlights.map(function (highlight) {
+            return highlight;
+        });
+    });
 
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         switch (message.id) {
             case SelectionMessage.SELECTED:
                 self.highlightSelection(message.color);
                 break;
-
         }
     });
 }

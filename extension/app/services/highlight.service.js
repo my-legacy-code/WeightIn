@@ -1,4 +1,30 @@
 function HighlightService(dependencies) {
+    let self = this;
+    this.weignInAPI = new WeignInAPI();
+    this.realTimeService = dependencies.realTimeService;
+    this.appStateService = dependencies.appStateService;
+    this.channelHandlers = {
+        connected: function () {
+            console.log("connected", this.identifier)
+
+        },
+        disconnected: function () {
+            console.log("disconnected", this.identifier)
+        },
+        received: function (data) {
+            if (!('message_type' in data))
+                return;
+            switch (data['message_type']) {
+                case 'all_highlights':
+                    self.receiveAllHighlights(data['highlights']);
+                    break;
+                case 'new_highlight':
+                    self.receiveNewHighlight(data['highlight']);
+                    break;
+            }
+        }
+    };
+
     this.data = {
         'https://developer.chrome.com/extensions/messaging': [
             {
@@ -77,29 +103,33 @@ function HighlightService(dependencies) {
             }
         ]
     };
-
-    this.receiveAllComments = dependencies.receiveAllComments;
-
-    // this.realTimeService = dependencies.realTimeService;
-    // this.channelHandlers = {
-    //     connected: function () {
-    //         console.log("connected", this.identifier)
-    //
-    //     },
-    //     disconnected: function () {
-    //         console.log("disconnected", this.identifier)
-    //     },
-    //     received: function (data) {
-    //         if (!('message_type' in data))
-    //             return;
-    //         switch (data['message_type']) {
-    //             case 'all_comments':
-    //                 dependencies.receiveAllComments(data['comments']);
-    //                 break;
-    //             case 'new_comment':
-    //                 dependencies.receiveNewComment(data['comment']);
-    //                 break;
-    //         }
-    //     }
-    // };
+    this.highlights = this.data[window.location.href];
 }
+
+HighlightService.prototype.start = function () {
+    this.receiveAllHighlights(this.data[window.location.href]);
+};
+
+HighlightService.prototype.receiveAllHighlights = function (highlights) {
+    this.appStateService.set({
+        'highlights': highlights
+    });
+};
+
+HighlightService.prototype.receiveNewHighlight = function (highlight, highlightIDsAfterPosition) {
+    let highlights = this.appStateService.getState().highlights.map(function (highlight) {
+        return Object.assign({}, highlight);
+    });
+    highlights = highlights.map(highlight =>
+        highlightIDsAfterPosition.indexOf(highlight.id) !== -1 ?
+            Object.assign({}, highlight, {position: highlight.position + 1}) :
+            highlight);
+    highlights.push(highlight);
+    let states = {};
+    states[AppState.HIGHLIGHTS] = highlights;
+    this.appStateService.set(states);
+};
+
+HighlightService.prototype.addHighlight = function (highlight, highlightIDsAfterPosition) {
+    this.receiveNewHighlight(highlight, highlightIDsAfterPosition);
+};

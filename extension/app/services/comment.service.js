@@ -41,7 +41,6 @@ CommentService.prototype.receiveNewComment = function (comment) {
 };
 
 CommentService.prototype.start = function () {
-
     this.realTimeService.subscribe({
             channel: "NewCommentChannel",
             id: uuidv4(),

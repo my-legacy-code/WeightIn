@@ -1,5 +1,5 @@
 function AppComponent() {
-    var self = this;
+    let self = this;
 
     this.appStateService = new AppStateService();
     this.appStateService.subscribe(function () {
@@ -17,20 +17,28 @@ function AppComponent() {
         appStateService: this.appStateService
     });
 
-    this.highlightsComponent = new HighlightsComponent({
-        appStateService: self.appStateService,
+    this.highlightService = new HighlightService({
+        realTimeService: this.realTimeService,
+        appStateService: this.appStateService
+    });
+
+    this.highlights = new HighlightsComponent({
+        appStateService: this.appStateService,
+        highlightService: this.highlightService,
         container: document.body
     });
 
     this.sidebar = new SideBarComponent({appStateService: this.appStateService, commentService: this.commentService});
     document.body.appendChild(this.sidebar.el);
+
     this.commentService.start();
+    this.highlightService.start();
 }
 
 (function bootstrap() {
-    var stateChecker =  window.setTimeout(function checkState() {
+    let stateChecker =  window.setTimeout(function checkState() {
         if(document.readyState === 'complete') {
-            AppComponent();
+            new AppComponent();
             window.clearInterval(stateChecker);
         } else stateChecker = window.setTimeout(checkState, 500);
     }, 500);

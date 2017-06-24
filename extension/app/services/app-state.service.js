@@ -14,6 +14,9 @@ AppStateService.prototype.handleState = function (state) {
             case AppState.COMMENTS:
                 self.state.comments = state[key];
                 break;
+            case AppState.HIGHLIGHTS:
+                self.state.highlights = state[key];
+                break;
         }
     });
 };
@@ -29,10 +32,8 @@ AppStateService.prototype.initState = function () {
                 case AppState.EXTENSION_ENABLED:
                     let state = {};
                     state[AppState.EXTENSION_ENABLED] = changes[key].newValue;
-                    console.log('AppStateService', state);
                     self.set(state);
                     break;
-
             }
     });
 
