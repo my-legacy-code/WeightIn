@@ -1,4 +1,4 @@
-(function AppComponent() {
+function AppComponent() {
     var self = this;
 
     this.appStateService = new AppStateService();
@@ -28,4 +28,13 @@
     this.sidebar = new SideBarComponent({appStateService: this.appStateService, commentService: this.commentService});
     document.body.appendChild(this.sidebar.el);
     this.commentService.start();
+}
+
+(function bootstrap() {
+    var stateChecker =  window.setTimeout(function checkState() {
+        if(document.readyState === 'complete') {
+            AppComponent();
+            window.clearInterval(stateChecker);
+        } else stateChecker = window.setTimeout(checkState, 500);
+    }, 500);
 })();
