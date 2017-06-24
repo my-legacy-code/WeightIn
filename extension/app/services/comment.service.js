@@ -1,5 +1,8 @@
 function CommentService(dependencies) {
+    let self = this;
+    this.weignInAPI = new WeignInAPI();
     this.realTimeService = dependencies.realTimeService;
+    this.appStateService = dependencies.appStateService;
     this.channelHandlers = {
         connected: function () {
             console.log("connected", this.identifier)
@@ -13,15 +16,30 @@ function CommentService(dependencies) {
                 return;
             switch (data['message_type']) {
                 case 'all_comments':
-                    dependencies.receiveAllComments(data['comments']);
+                    self.receiveAllComments(data['comments']);
                     break;
                 case 'new_comment':
-                    dependencies.receiveNewComment(data['comment']);
+                    self.receiveNewComment(data['comment']);
                     break;
             }
         }
     };
 }
+
+CommentService.prototype.receiveAllComments = function (comments) {
+    this.appStateService.set({
+        'comments': comments
+    })
+};
+
+CommentService.prototype.receiveNewComment = function (comment) {
+    console.log("+++++");
+    let comments = this.appStateService.getState().comments.map(function (comment) { return comment });
+    comments.push(comment);
+    let states = {};
+    states[AppState.COMMENTS] = comments;
+    this.appStateService.set(states);
+};
 
 CommentService.prototype.start = function () {
 
@@ -34,24 +52,9 @@ CommentService.prototype.start = function () {
 };
 
 CommentService.prototype.addComment = function (user, url, comment) {
-    var headers = {
-        'Content-Type': 'application/json'
-    };
-    var data = JSON.stringify({
-        comment: {
-            "user": user,
-            "url": url,
-            "body": comment
-        }
-    });
     chrome.runtime.sendMessage({
         id: RequestMessage.POST,
-        request: {
-            url: this.serverURL + '/comments',
-            queryParams: null,
-            data: data,
-            headers: headers
-        }
+        request: this.weignInAPI.addComment(user, url, comment)
     });
 };
 

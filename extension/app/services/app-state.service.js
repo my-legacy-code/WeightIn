@@ -5,7 +5,7 @@ function AppStateService() {
 AppStateService.prototype = Object.create(StateService.prototype);
 
 AppStateService.prototype.handleState = function (state) {
-    var self = this;
+    let self = this;
     Object.keys(state).forEach(function (key) {
         switch (key) {
             case AppState.EXTENSION_ENABLED:
@@ -18,28 +18,16 @@ AppStateService.prototype.handleState = function (state) {
     });
 };
 
-AppStateService.prototype.addComment = function (comment) {
-    var comments = this.state.comments.map(function (comment) { return comment });
-    comments.push(comment);
-    var states = {};
-    states[AppState.COMMENTS] = comments;
-    this.set(states);
-};
-
 AppStateService.prototype.initState = function () {
     this.state['comments'] = [];
     this.state['currentUser'] = 'Harry';
-    this.state['highlights'] = [
-        {
-
-        }
-    ];
+    this.state['highlights'] = [];
 
     chrome.storage.onChanged.addListener(function (changes) {
-        for (var key in changes)
+        for (let key in changes)
             switch (key) {
                 case AppState.EXTENSION_ENABLED:
-                    var state = {};
+                    let state = {};
                     state[AppState.EXTENSION_ENABLED] = changes[key].newValue;
                     console.log('AppStateService', state);
                     self.set(state);
@@ -48,7 +36,7 @@ AppStateService.prototype.initState = function () {
             }
     });
 
-    var self = this;
+    let self = this;
     chrome.storage.sync.get(AppState.EXTENSION_ENABLED, function (values) {
         var state = {};
         state[AppState.EXTENSION_ENABLED] = values[AppState.EXTENSION_ENABLED];

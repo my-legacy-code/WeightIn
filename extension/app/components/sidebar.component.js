@@ -71,8 +71,8 @@ function SideBarComponent(dependencies) {
 
 SideBarComponent.prototype = Object.create(Component.prototype);
 
-Component.prototype.bindEventListeners = function () {
-    var self = this;
+SideBarComponent.prototype.bindEventListeners = function () {
+    let self = this;
     this.textfield = this.el.querySelector("#weigh-in-comment-input");
     this.textfield.addEventListener('keypress', function (e) {
         if (e.keyCode === 13) {
@@ -80,6 +80,6 @@ Component.prototype.bindEventListeners = function () {
         }
     });
 
-    var sendButton = this.el.querySelector('#weigh-in-send-button');
+    let sendButton = this.el.querySelector('#weigh-in-send-button');
     sendButton.addEventListener('click', self.addComment);
 };

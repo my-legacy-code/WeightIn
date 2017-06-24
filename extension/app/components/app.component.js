@@ -14,18 +14,13 @@ function AppComponent() {
     this.realTimeService = new RealTimeService();
     this.commentService = new CommentService({
         realTimeService: this.realTimeService,
-        receiveAllComments: function (comments) {
-            self.appStateService.set({
-                'comments': comments
-            })
-        },
-        receiveNewComment: function (comment) {
-            self.appStateService.addComment(comment);
-        }
+        appStateService: this.appStateService
     });
 
-
-    this.highlightsComponent = new HighlightsComponent({container: document.body});
+    this.highlightsComponent = new HighlightsComponent({
+        appStateService: self.appStateService,
+        container: document.body
+    });
 
     this.sidebar = new SideBarComponent({appStateService: this.appStateService, commentService: this.commentService});
     document.body.appendChild(this.sidebar.el);

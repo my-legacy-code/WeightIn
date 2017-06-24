@@ -41,6 +41,7 @@
         "node_modules/actioncable-js/dist/action_cable.js",
         "shared/messages/request.message.js",
         "shared/messages/selection.message.js",
+        "app/apis/weign-in.api.js",
         "app/services/state.service.js",
         "app/states/app.state.js",
         "app/helpers/uuid.min.js",
