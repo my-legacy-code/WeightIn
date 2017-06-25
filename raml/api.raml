@@ -2,122 +2,131 @@
 title: WeighIn
 version: v1.0
 baseUri: https://weighin.wehackers.club
-securitySchemes:
-oauth_2_0: !include securitySchemes/oauth_2_0.raml
-securedBy: [oauth_2_0]
+#securitySchemes:
+#oauth_2_0: !include securitySchemes/oauth_2_0.raml
+#securedBy: [oauth_2_0]
 
-/messages:
-  get:
-    responses:
-      200:
-        body:
-          application/json:
-            example: |
-              {
-                "messages": [
+/urls/{url}:
+  /comments:
+    get:
+      description: "Get all comments for the given URL"
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
                   {
-                    "timestamp": "123123123",
-                    "user": "bob",
-                    "text": "this is a comment",
-                    "highlight_id": "1234bnmn",
-                    "start" : 12,
-                    "end" : 24
-                  },
-                  {
-                    "timestamp": "123123123",
-                    "user": "bob",
-                    "text": "this is a comment"
+                    "user": {
+                      "username": "harryliu",
+                      "name": "Harry"
+                    },
+                    "comment": {
+                      "body": "5555",
+                      "createdAt": 123232412
+                    }
                   }
                 ]
-              }
-  post:
-    description: "Add a message"
-    body:
-      application/json:
-        type: Message
-        example: |
-          {
-            "message": {
-              "user": "bob",
-              "text": "this is a message",
-              "highlight_element_id": "1234bnmn"
+    post:
+      description: "Add a comment to a given URL"
+      headers:
+        Username:
+          description: Username of the user who created the comment
+          example: harryliu
+      body:
+        application/json:
+          example: |
+            {
+              "body": "5555"
             }
-          }
-		responses: 
-			201:
-/comments:
-  get:
-    responses:
-      200:
-        body:
-          application/json:
-            example: |
-              {
-                "comments": [
+      responses:
+          201:
+  /highlights:
+    get:
+      description: "Get all highlights for given URL"
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
                   {
-                    "timestamp": "123123123",
-                    "user": "bob",
-                    "text": "this is a comment"
+                    "color": "green",
+                    "end": 78,
+                    "id": 2208,
+                    "parentId": 43,
+                    "previousSiblingId": -1,
+                    "start": 7,
+                    "position": 0
                   },
                   {
-                    "timestamp": "123123123",
-                    "user": "bob",
-                    "text": "this is a comment"
+                    "color": "red",
+                    "end": 74,
+                    "id": 2209,
+                    "parentId": 43,
+                    "previousSiblingId": 2208,
+                    "start": 6,
+                    "position": 1
                   }
                 ]
-               }
-  post:
-    description: "Add a comment"
-    body:
-      application/json:
-      type: Comment
-      example: |
-        {
-          "comment": {
-              "user": "bob",
-              "text": "this is a comment",
-              "url": "url.com"
-          }
-        }
-    responses:
-        201:
-/highlights:
-  get:
-    responses:
-      200:
-        body:
-          application/json:
-            example: |
-              {
-                "highlights" : [
-                  {
-                    "db_id" : 1,
-                    "element_id" : 32,
-                    "start" : 20,
-                    "end" : 32
-                  },
-                  {
-                    "db_id" : 1,
-                    "element_id" : 32,
-                    "start" : 20,
-                    "end" : 32
-                  }
-                ]
-              }
-  post:
-    description: "Add a highlight"
-    body:
-      application/json:
-        type: Comment
-        example: |
-          {
-            "highlight" : {
-              "user" : "uname",
-              "url" : "somewhere.com"
-              "element_id" :1,
-              "start" :3,
-              "end" :12
+    post:
+      description: "Add a highlight and increment position for highlights whose IDs are in highlightIDsAfterPosition"
+      headers:
+        Username:
+          description: Username of the user who created the comment
+          example: harryliu
+      body:
+        application/json:
+          example: |
+            {
+              "highlight": {
+                "color": "green",
+                "end": 78,
+                "id": 2208,
+                "parentId": 43,
+                "previousSiblingId": -1,
+                "start": 7,
+                "position": 0
+              },
+              "highlightIDsAfterPosition": [
+                153,
+                154,
+                155
+              ]
             }
-          }
-    responses:
-       201:
+      responses:
+         201:
+    /{highlight_id}/messages:
+      get:
+        description: "Get all messages for the given highlight"
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  [
+                    {
+                      "user": {
+                        "username": "harryliu",
+                        "name": "Harry"
+                      },
+                      "comment": {
+                        "body": "5555",
+                        "createdAt": 123232412
+                      }
+                    }
+                  ]
+      post:
+        description: "Add a message to the given highlight"
+        headers:
+          Username:
+            description: Username of the user who created the comment
+            example: harryliu
+        body:
+          application/json:
+            example: |
+              {
+                "body": "5555"
+              }
+        responses:
+          201:

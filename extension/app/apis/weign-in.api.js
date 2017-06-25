@@ -12,14 +12,11 @@ WeignInAPI.prototype.addComment = function (user, url, comment) {
         'Content-Type': 'application/json'
     };
     let data = JSON.stringify({
-        comment: {
-            "user": user,
-            "url": url,
-            "body": comment
-        }
+        "user": user,
+        "body": comment
     });
     return {
-        url: this.serverURL + '/comments',
+        url: `${this.serverURL}/urls/${url}/comments`,
         queryParams: null,
         data: data,
         headers: headers
