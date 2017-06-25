@@ -19,6 +19,7 @@ var callback = function (ramlRequests){
             if (reqToMock.defaultCode) {
                 code = reqToMock.defaultCode;
             }
+            console.log(reqToMock);
             if(reqToMock.example)
                 res.status(code).send(reqToMock.example());
             else res.status(code).end();

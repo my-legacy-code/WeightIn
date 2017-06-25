@@ -4,6 +4,11 @@ version: v1.0
 baseUri: https://weighin.wehackers.club
 
 /urls/{url}:
+  uriParameters:
+    url:
+      description: "URL of the page in base64 encoding"
+      type: string
+      example:
   /comments:
     get:
       description: "Get all comments for the given URL"
