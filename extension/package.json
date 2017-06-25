@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "actioncable-js": "^5.0.0-rc2",
+    "handlebars": "^4.0.10",
     "moment": "^2.18.1"
   }
 }

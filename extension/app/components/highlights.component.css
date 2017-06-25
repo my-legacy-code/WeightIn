@@ -1,0 +1,23 @@
+weigh-in-highlighted {
+    color: black;
+}
+
+weigh-in-highlighted.yellow {
+    background-color: #F6E163;
+}
+
+weigh-in-highlighted.red {
+    background-color: #FF7F7F;
+}
+
+weigh-in-highlighted.purple {
+    background-color: #EB85FF;
+}
+
+weigh-in-highlighted.blue {
+    background-color: #6FDDF4;
+}
+
+weigh-in-highlighted.green {
+    background-color: #B8E986;
+}

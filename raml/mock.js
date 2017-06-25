@@ -15,11 +15,14 @@ var callback = function (ramlRequests){
 
     ramlRequests.forEach(function(reqToMock){
         app[reqToMock.method](reqToMock.uri, function(req,res){
-            var code = 200;
+            let code;
             if (reqToMock.defaultCode) {
                 code = reqToMock.defaultCode;
             }
-            res.status(code).send(reqToMock.example());
+            console.log(reqToMock);
+            if(reqToMock.example)
+                res.status(code).send(reqToMock.example());
+            else res.status(code).end();
         });
     });
 
