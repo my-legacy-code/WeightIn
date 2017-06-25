@@ -3,15 +3,11 @@ title: WeighIn
 version: v1.0
 baseUri: https://weighin.wehackers.club
 
-/urls/{url}:
-  uriParameters:
-    url:
-      description: "URL of the page in base64 encoding"
-      type: string
-      example:
-  /comments:
+/cable:
+  description: "Actioncable server"
+  /all_comments_{client_id}:
+    description: "Push all comments for the given URL to a specific client when it first subscribes to the channel"
     get:
-      description: "Get all comments for the given URL"
       responses:
         200:
           body:
@@ -23,12 +19,109 @@ baseUri: https://weighin.wehackers.club
                       "username": "harryliu",
                       "name": "Harry"
                     },
-                    "comment": {
-                      "body": "5555",
-                      "createdAt": 123232412
-                    }
+                    "body": "5555",
+                    "createdAt": 123232412
                   }
                 ]
+  /new_comment_{url}:
+    description: "Push new comment to all clients visiting the given URL"
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message_type": "new_comment",
+                  "comment": {
+                    "user": {
+                      "username": "harryliu",
+                      "name": "Harry"
+                    },
+                    "body": "5555",
+                    "createdAt": 123232412
+                  }
+                }
+  /all_highlights_{client_id}:
+    description: "Push all highlights for the given URL to a specific client when it first subscribes to the channel"
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 21321312,
+                    "color": "green",
+                    "end": 78,
+                    "domID": 2208,
+                    "parentId": 43,
+                    "previousSiblingId": -1,
+                    "start": 7,
+                    "position": 0
+                  },
+                  {
+                    "id": 123213123,
+                    "color": "red",
+                    "end": 74,
+                    "domID": 2209,
+                    "parentId": 43,
+                    "previousSiblingId": 2208,
+                    "start": 6,
+                    "position": 1
+                  }
+                ]
+  /new_highlight_{url}:
+    description: "Push new highlight to all clients visiting the given URL"
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "highlight": {
+                    "id": 12312312,
+                    "color": "green",
+                    "end": 78,
+                    "domID": 2208,
+                    "parentId": 43,
+                    "previousSiblingId": -1,
+                    "start": 7,
+                    "position": 0
+                  },
+                  "domIDsAfter": [
+                    153,
+                    154,
+                    155
+                  ]
+                }
+  /new_message_{highlight_id}:
+    description: "Push new message to all clients visiting the message box for the given highlight"
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "highlightID": 2313213,
+                  "user": {
+                    "username": "harryliu",
+                    "name": "Harry"
+                  },
+                  "body": "5555",
+                  "createdAt": 123232412
+                }
+
+/urls/{url_id}:
+  uriParameters:
+    url_id:
+      description: "Database ID for an URL"
+      type: number
+      example: 1244323
+  /comments:
     post:
       description: "Add a comment to a given URL"
       headers:
@@ -43,37 +136,7 @@ baseUri: https://weighin.wehackers.club
             }
       responses:
           201:
-            body:
-              application/json:
-                example:
   /highlights:
-    get:
-      description: "Get all highlights for given URL"
-      responses:
-        200:
-          body:
-            application/json:
-              example: |
-                [
-                  {
-                    "color": "green",
-                    "end": 78,
-                    "id": 2208,
-                    "parentId": 43,
-                    "previousSiblingId": -1,
-                    "start": 7,
-                    "position": 0
-                  },
-                  {
-                    "color": "red",
-                    "end": 74,
-                    "id": 2209,
-                    "parentId": 43,
-                    "previousSiblingId": 2208,
-                    "start": 6,
-                    "position": 1
-                  }
-                ]
     post:
       description: "Add a highlight and increment position for highlights whose IDs are in highlightIDsAfterPosition"
       headers:
@@ -85,15 +148,16 @@ baseUri: https://weighin.wehackers.club
           example: |
             {
               "highlight": {
+                "id": 1232321,
                 "color": "green",
                 "end": 78,
-                "id": 2208,
+                "domID": 2208,
                 "parentId": 43,
                 "previousSiblingId": -1,
                 "start": 7,
                 "position": 0
               },
-              "highlightIDsAfterPosition": [
+              "domIDsAfter": [
                 153,
                 154,
                 155
@@ -101,9 +165,6 @@ baseUri: https://weighin.wehackers.club
             }
       responses:
         201:
-          body:
-            application/json:
-              example:
     /{highlight_id}/messages:
       get:
         description: "Get all messages for the given highlight"
@@ -118,10 +179,8 @@ baseUri: https://weighin.wehackers.club
                         "username": "harryliu",
                         "name": "Harry"
                       },
-                      "comment": {
-                        "body": "5555",
-                        "createdAt": 123232412
-                      }
+                      "body": "5555",
+                      "createdAt": 123232412
                     }
                   ]
       post:
@@ -138,6 +197,3 @@ baseUri: https://weighin.wehackers.club
               }
         responses:
           201:
-            body:
-              application/json:
-                example:
