@@ -2,9 +2,6 @@
 title: WeighIn
 version: v1.0
 baseUri: https://weighin.wehackers.club
-#securitySchemes:
-#oauth_2_0: !include securitySchemes/oauth_2_0.raml
-#securedBy: [oauth_2_0]
 
 /urls/{url}:
   /comments:
@@ -41,6 +38,9 @@ baseUri: https://weighin.wehackers.club
             }
       responses:
           201:
+            body:
+              application/json:
+                example:
   /highlights:
     get:
       description: "Get all highlights for given URL"
@@ -95,7 +95,10 @@ baseUri: https://weighin.wehackers.club
               ]
             }
       responses:
-         201:
+        201:
+          body:
+            application/json:
+              example:
     /{highlight_id}/messages:
       get:
         description: "Get all messages for the given highlight"
@@ -130,3 +133,6 @@ baseUri: https://weighin.wehackers.club
               }
         responses:
           201:
+            body:
+              application/json:
+                example:
