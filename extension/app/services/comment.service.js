@@ -16,6 +16,7 @@ function CommentService(dependencies) {
                 return;
             switch (data['message_type']) {
                 case 'all_comments':
+                    console.log(data['comments']);
                     self.receiveAllComments(data['comments']);
                     break;
                 case 'new_comment':

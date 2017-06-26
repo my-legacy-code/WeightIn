@@ -10,8 +10,8 @@ function SideBarComponent(dependencies) {
 <ul id="weigh-in-sidebar-comment-list">
     {{#each comments}}
     <li>
-        <div><span class="weigh-in-username">{{user.name}}</span>:&nbsp;{{comment.body}}</div>
-        <div class="weigh-in-datetime">{{comment.created_at}}</div>
+        <div><span class="weigh-in-username">{{user}}</span>:&nbsp;{{body}}</div>
+        <div class="weigh-in-datetime">{{created_at}}</div>
     </li>
     {{/each}}
 </ul>
